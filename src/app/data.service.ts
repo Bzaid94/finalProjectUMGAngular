@@ -24,7 +24,7 @@ export class DataService {
   }
 
   updateMessage(id: number, data: any): Observable<any> {
-    return this.http.put( baseUrl + '/update/${id}/', data);
+    return this.http.put( baseUrl + '/update/' + id + "/", data);
   }
 
   deleteMessage(id: number): Observable<any> {

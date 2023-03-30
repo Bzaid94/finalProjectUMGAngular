@@ -68,14 +68,18 @@ export class AppComponent implements AfterViewInit, OnInit{
     });
   }
 
-  updateMessage() {
+  updateMessage(id : number) {
     const data = {
       message: this.message.message,
       author: this.message.author
     };
-    this.dataService.updateMessage(this.message.id, data).subscribe(response => {
+    this.dataService.updateMessage(id, data).subscribe(response => {
         console.log(response);
         this.submitted = true;
+        this.message = {
+          message: '',
+          author: '',
+        };
         this.getAllMessages();
       },
       error => {
