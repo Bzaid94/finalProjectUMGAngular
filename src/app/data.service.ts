@@ -1,4 +1,4 @@
-import {Injectable, OnInit} from "@angular/core";
+import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 
@@ -16,7 +16,7 @@ export class DataService {
   }
 
   getId(id: number): Observable<any> {
-    return this.http.get(baseUrl + '$/get/${id}/');
+    return this.http.get(baseUrl + '/get/${id}/');
   }
 
   newMessage(data: any): Observable<any> {

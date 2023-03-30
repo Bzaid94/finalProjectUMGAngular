@@ -6,7 +6,6 @@ import {MessageModel} from "./Message.model";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -74,7 +73,6 @@ export class AppComponent implements AfterViewInit, OnInit{
       message: this.message.message,
       author: this.message.author
     };
-
     this.dataService.updateMessage(this.message.id, data).subscribe(response => {
         console.log(response);
         this.submitted = true;
@@ -87,8 +85,8 @@ export class AppComponent implements AfterViewInit, OnInit{
 
   deleteMessage(id: number) {
     this.dataService.deleteMessage(id).subscribe(response => {
-        this.getAllMessages();
         console.log(response);
+        this.getAllMessages();
       },
       error => {
         console.log(error);
