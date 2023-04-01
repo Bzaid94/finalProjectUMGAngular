@@ -13,6 +13,7 @@ import {MatTableModule} from "@angular/material/table";
 import {HttpClientModule} from "@angular/common/http";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatListModule} from "@angular/material/list";
+import {MatButtonModule} from "@angular/material/button";
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import {MatListModule} from "@angular/material/list";
     MatIconModule,
     MatSlideToggleModule,
     MatPaginatorModule,
+    MatButtonModule,
     MatInputModule,
     ReactiveFormsModule,
     MatTableModule,

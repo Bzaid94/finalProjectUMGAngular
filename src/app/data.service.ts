@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 
-const baseUrl = "http://localhost:7790/message";
+const baseUrl = 'http://localhost:7790/message';
 @Injectable({
   providedIn: 'root'
 })
@@ -16,7 +16,7 @@ export class DataService {
   }
 
   getId(id: number): Observable<any> {
-    return this.http.get(baseUrl + '/get/${id}/');
+    return this.http.get(baseUrl + '/get/' + id + '/');
   }
 
   newMessage(data: any): Observable<any> {
@@ -24,7 +24,7 @@ export class DataService {
   }
 
   updateMessage(id: number, data: any): Observable<any> {
-    return this.http.put( baseUrl + '/update/' + id + "/", data);
+    return this.http.put( baseUrl + '/update/' + id + '/', data);
   }
 
   deleteMessage(id: number): Observable<any> {
