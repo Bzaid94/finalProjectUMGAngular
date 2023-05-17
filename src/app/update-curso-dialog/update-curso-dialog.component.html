@@ -1,0 +1,17 @@
+<h2 mat-dialog-title>Actualizar Curso</h2>
+<mat-dialog-content>
+  <form [formGroup]="updateCursoForm" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="name">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Descripción</mat-label>
+      <input matInput formControlName="description">
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancelar</button>
+  <button mat-button (click)="onSubmit()" [disabled]="updateCursoForm.invalid">Actualizar</button>
+</mat-dialog-actions>

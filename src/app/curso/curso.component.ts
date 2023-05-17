@@ -7,6 +7,9 @@ import {ThemeService} from "../theme.service";
 import {MatTableDataSource} from "@angular/material/table";
 import {CursoService} from "./curso.service";
 import {CursoModel} from "./curso.model";
+import {UpdateCursoDialogComponent} from "../update-curso-dialog/update-curso-dialog.component";
+import {MatDialog} from "@angular/material/dialog";
+import {ConfirmDeleteDialogComponent} from "../confirm-delete-dialog/confirm-delete-dialog.component";
 
 @Component({
   selector: 'app-curso',
@@ -26,7 +29,8 @@ export class CursoComponent implements AfterViewInit, OnInit {
     this.getAllCursos();
   }
 
-  constructor(private cursoService: CursoService, private overlay: OverlayContainer, public router : Router, private themeService : ThemeService) {
+  constructor(private cursoService: CursoService, private overlay: OverlayContainer, public router : Router, private themeService : ThemeService, public dialog : MatDialog) {
+    this.dataSource = new MatTableDataSource<CursoModel>();
     this.themeService.darkMode$.subscribe((darkMode) => {
       this.toggleControl.setValue(darkMode, {emitEvent: false});
       this.className = darkMode ? 'darkMode' : '';
@@ -45,7 +49,7 @@ export class CursoComponent implements AfterViewInit, OnInit {
 
   getAllCursos(){
     this.cursoService.getAllCursos().subscribe((cursos) => {
-      this.dataSource = new MatTableDataSource<CursoModel>(cursos);
+      this.dataSource.data = cursos;
       this.dataSource.paginator = this.paginator;
       this.cursos = cursos;
       console.log(cursos);
@@ -54,32 +58,47 @@ export class CursoComponent implements AfterViewInit, OnInit {
     });
   }
 
-  updateCurso(id: number){
-    const data = {
-      name : this.curso.name,
-      description : this.curso.description
-    };
-    this.cursoService.updateCurso(id, data).subscribe(response => {
-      console.log(response);
-      this.submitted = true;
-      this.curso = {
-        name : '',
-        description : ''
-      };
-      this.getAllCursos();
-    }, error => {
-      console.log(error);
+  updateCurso(id: number, name: string, description: string) {
+    const dialogRef = this.dialog.open(UpdateCursoDialogComponent, {
+      width: '300px',
+      data: {name: name, description: description}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.cursoService.updateCurso(id, result).subscribe(
+          response => {
+            console.log(response);
+            this.submitted = true;
+            this.getAllCursos();
+          },
+          error => {
+            console.log(error);
+          }
+        );
+      }
     });
   }
 
-  deleteCurso(id: number){
-    this.cursoService.deleteCurso(id).subscribe(response => {
-      console.log(response);
-      this.getAllCursos();
-    }, error => {
-      console.log(error)
+  deleteCurso(id: number) {
+    const dialogRef = this.dialog.open(ConfirmDeleteDialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.cursoService.deleteCurso(id).subscribe(
+          response => {
+            console.log(response);
+            this.cursoService.getAllCursos();
+          },
+          error => {
+            console.log(error);
+          }
+        );
+      }
     });
   }
+
+
 
   ngOnInit(): void {
     this.toggleControl.valueChanges.subscribe((darkMode) => {

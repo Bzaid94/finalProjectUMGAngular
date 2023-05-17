@@ -7,6 +7,10 @@ import {FormControl} from "@angular/forms";
 import {MatTableDataSource} from "@angular/material/table";
 import {CatedraticoModel} from "./catedratico.model";
 import {MatPaginator} from "@angular/material/paginator";
+import {ConfirmDeleteDialogComponent} from "../confirm-delete-dialog/confirm-delete-dialog.component";
+import {MatDialog} from "@angular/material/dialog";
+import {UpdateCatedraticoDialogComponent} from "../update-catedratico-dialog/update-catedratico-dialog.component";
+import {last} from "rxjs";
 
 @Component({
   selector: 'app-catedratico',
@@ -23,7 +27,7 @@ export class CatedraticoComponent implements AfterViewInit, OnInit{
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private catedraticoService: CatedraticoService, private overlay: OverlayContainer, public router : Router, private themeService : ThemeService) {
+  constructor(private catedraticoService: CatedraticoService, private overlay: OverlayContainer, public router : Router, private themeService : ThemeService, public dialog : MatDialog) {
     this.themeService.darkMode$.subscribe((darkMode) => {
       this.toggleControl.setValue(darkMode, {emitEvent: false});
       this.className = darkMode ? 'darkMode' : '';
@@ -56,34 +60,43 @@ export class CatedraticoComponent implements AfterViewInit, OnInit{
     });
   }
 
-  updateCatedratico(id: number){
-    const data = {
-      name : this.catedratico.name,
-      lastName : this.catedratico.lastName,
-      speciality : this.catedratico.speciality,
-      email : this.catedratico.email
-    };
-    this.catedraticoService.updateCatedratico(id, data).subscribe(response => {
-      console.log(response);
-      this.submitted = true;
-      this.catedratico = {
-        name : '',
-        lastName : '',
-        speciality : '',
-        email : '',
-      };
-      this.getAllCatedratico();
-    }, error => {
-      console.log(error);
+  updateCatedratico(id: number, name: string, lastName: string, speciality: string, email : string) {
+    const dialogRef = this.dialog.open(UpdateCatedraticoDialogComponent, {
+      width: '300px',
+      data: {name: name, lastName: lastName, speciality: speciality, email: email}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.catedraticoService.updateCatedratico(id, result).subscribe(
+          response => {
+            console.log(response);
+            this.submitted = true;
+            this.getAllCatedratico();
+          },
+          error => {
+            console.log(error);
+          }
+        );
+      }
     });
   }
 
-  deleteCatedratico(id: number){
-    this.catedraticoService.deleteCatedratico(id).subscribe(response => {
-      console.log(response);
-      this.getAllCatedratico();
-    }, error => {
-      console.log(error)
+  deleteCatedratico(id: number) {
+    const dialogRef = this.dialog.open(ConfirmDeleteDialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.catedraticoService.deleteCatedratico(id).subscribe(
+          response => {
+            console.log(response);
+            this.catedraticoService.getAllCatedraticos();
+          },
+          error => {
+            console.log(error);
+          }
+        );
+      }
     });
   }
 

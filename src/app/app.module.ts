@@ -24,6 +24,11 @@ import {MatMenuModule} from "@angular/material/menu";
 import { CrearAlumnoComponent } from './crear-alumno/crear-alumno.component';
 import { CrearCatedraticoComponent } from './crear-catedratico/crear-catedratico.component';
 import { CrearCursoComponent } from './crear-curso/crear-curso.component';
+import { UpdateCursoDialogComponent } from './update-curso-dialog/update-curso-dialog.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import { ConfirmDeleteDialogComponent } from './confirm-delete-dialog/confirm-delete-dialog.component';
+import { UpdateAlumnoDialogComponent } from './update-alumno-dialog/update-alumno-dialog.component';
+import { UpdateCatedraticoDialogComponent } from './update-catedratico-dialog/update-catedratico-dialog.component';
 
 const routes: Routes = [
   { path: 'alumno', component: AlumnoComponent },
@@ -44,25 +49,30 @@ const routes: Routes = [
     PrincipalComponent,
     CrearAlumnoComponent,
     CrearCatedraticoComponent,
-    CrearCursoComponent
+    CrearCursoComponent,
+    UpdateCursoDialogComponent,
+    ConfirmDeleteDialogComponent,
+    UpdateAlumnoDialogComponent,
+    UpdateCatedraticoDialogComponent
   ],
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        RouterModule.forRoot(routes),
-        HttpClientModule,
-        MatToolbarModule,
-        MatIconModule,
-        MatSlideToggleModule,
-        MatPaginatorModule,
-        MatButtonModule,
-        MatInputModule,
-        ReactiveFormsModule,
-        MatTableModule,
-        FormsModule,
-        MatCardModule,
-        MatMenuModule
-    ],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    RouterModule.forRoot(routes),
+    HttpClientModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatSlideToggleModule,
+    MatPaginatorModule,
+    MatButtonModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatTableModule,
+    FormsModule,
+    MatCardModule,
+    MatMenuModule,
+    MatDialogModule
+  ],
   exports: [
     RouterModule,
     MatSidenavModule,

@@ -7,6 +7,9 @@ import {MatTableDataSource} from "@angular/material/table";
 import {FormControl} from "@angular/forms";
 import {Router} from "@angular/router";
 import {ThemeService} from "../theme.service";
+import {ConfirmDeleteDialogComponent} from "../confirm-delete-dialog/confirm-delete-dialog.component";
+import {MatDialog} from "@angular/material/dialog";
+import {UpdateAlumnoDialogComponent} from "../update-alumno-dialog/update-alumno-dialog.component";
 
 @Component({
   selector: 'app-alumno',
@@ -26,7 +29,7 @@ export class AlumnoComponent implements AfterViewInit, OnInit{
     this.getAllAlumnos();
   }
 
-  constructor(private alumnoService: AlumnoService, private overlay: OverlayContainer, public router : Router, private themeService : ThemeService) {
+  constructor(private alumnoService: AlumnoService, private overlay: OverlayContainer, public router : Router, private themeService : ThemeService, public dialog : MatDialog) {
     this.themeService.darkMode$.subscribe((darkMode) => {
       this.toggleControl.setValue(darkMode, {emitEvent: false});
       this.className = darkMode ? 'darkMode' : '';
@@ -56,34 +59,43 @@ export class AlumnoComponent implements AfterViewInit, OnInit{
       });
   }
 
-  updateAlumno(id: number){
-    const data = {
-      name : this.alumno.name,
-      lastName : this.alumno.lastName,
-      carne : this.alumno.carne,
-      email : this.alumno.email
-    };
-    this.alumnoService.updateAlumno(id, data).subscribe(response => {
-      console.log(response);
-      this.submitted = true;
-      this.alumno = {
-        name : '',
-        lastName : '',
-        carne : '',
-        email : '',
-      };
-      this.getAllAlumnos();
-    }, error => {
-      console.log(error);
+  updateAlumno(id: number, name: string, lastName: string, carne: string, email : string) {
+    const dialogRef = this.dialog.open(UpdateAlumnoDialogComponent, {
+      width: '300px',
+      data: {name: name, lastName: lastName, carne: carne, email: email}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.alumnoService.updateAlumno(id, result).subscribe(
+          response => {
+            console.log(response);
+            this.submitted = true;
+            this.getAllAlumnos();
+          },
+          error => {
+            console.log(error);
+          }
+        );
+      }
     });
   }
 
-  deleteAlumno(id: number){
-    this.alumnoService.deleteAlumno(id).subscribe(response => {
-      console.log(response);
-      this.getAllAlumnos();
-    }, error => {
-      console.log(error)
+  deleteAlumno(id: number) {
+    const dialogRef = this.dialog.open(ConfirmDeleteDialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.alumnoService.deleteAlumno(id).subscribe(
+          response => {
+            console.log(response);
+            this.alumnoService.getAllAlumnos();
+          },
+          error => {
+            console.log(error);
+          }
+        );
+      }
     });
   }
 
