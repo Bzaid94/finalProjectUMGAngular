@@ -1,0 +1,79 @@
+<mat-toolbar color="primary">
+  Alumno
+  <div class="flex-stretch"></div>
+  <mat-icon class="mr-8">brightness_5</mat-icon>
+  <mat-slide-toggle [formControl]="toggleControl" class="mr-8">
+  </mat-slide-toggle>
+  <mat-icon>bedtime</mat-icon>
+</mat-toolbar>
+
+
+<div class="content mat-app-background" fxLayout="row" fxLayout.xs="column" fxLayoutGap="16px">
+  <div class="center">
+    <h2 >Listado de Alumnos</h2>
+  </div>
+
+  <div class="center">
+    <h3>A continuacion se muestra los alumnos que se encuentran Activos en el sistema </h3>
+  </div>
+
+  <div class="mat-elevation-z7">
+    <table [ngClass]="(flagToggle)? 'shadow' : 'display-normal'" mat-table [dataSource]="dataSource">
+      <!-- Position Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> No. </th>
+        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Nombre </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+
+      <!-- LastName Column -->
+      <ng-container matColumnDef="lastName">
+        <th mat-header-cell *matHeaderCellDef> Apellido </th>
+        <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
+      </ng-container>
+
+      <!-- Carne Column -->
+      <ng-container matColumnDef="carne">
+        <th mat-header-cell *matHeaderCellDef> Carné </th>
+        <td mat-cell *matCellDef="let element"> {{element.carne}} </td>
+      </ng-container>
+
+      <!-- Email Column-->
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef> Correo </th>
+        <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Acción </th>
+        <td mat-cell *matCellDef="let element"> {{element.actions}}
+          <button mat-button color="warn" (click)="deleteAlumno(element.id)"> Eliminar </button>
+          <button mat-button color="primary" (click)="updateAlumno(element.id)"> Actualizar </button>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                   showFirstLastButtons
+                   aria-label="Select page of periodic elements">
+    </mat-paginator>
+  </div>
+
+  <br><br>
+
+  <ng-container *ngIf="router.url !== '/'">
+    <section>
+      <div class="end">
+        <div class="example-label"></div>
+        <button mat-stroked-button color="primary" (click)="backToMenu()">Volver</button>
+      </div>
+    </section>
+  </ng-container>
+</div>

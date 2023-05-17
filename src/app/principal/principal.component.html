@@ -1,0 +1,34 @@
+<mat-toolbar color="primary">
+  Menú Principal |
+  <button mat-button [matMenuTriggerFor]="alumnosMenu">Alumnos</button>
+  <mat-menu #alumnosMenu="matMenu" yPosition="below">
+    <button mat-menu-item routerLink="/crear_alumno">Crear Alumno</button>
+    <button mat-menu-item routerLink="/alumno">Ver lista</button>
+  </mat-menu>
+
+  <button mat-button [matMenuTriggerFor]="catedraticosMenu">Catedraticos</button>
+  <mat-menu #catedraticosMenu="matMenu" yPosition="below">
+    <button mat-menu-item routerLink="/crear_catedratico">Crear Catedratico</button>
+    <button mat-menu-item routerLink="/catedratico">Ver lista</button>
+  </mat-menu>
+
+  <button mat-button [matMenuTriggerFor]="cursosMenu">Cursos</button>
+  <mat-menu #cursosMenu="matMenu" yPosition="below">
+    <button mat-menu-item routerLink="/crear_curso">Crear Cursos</button>
+    <button mat-menu-item routerLink="/curso">Ver lista</button>
+  </mat-menu>
+
+  <div class="flex-stretch"></div>
+  <mat-icon class="mr-8">brightness_5</mat-icon>
+  <mat-slide-toggle [formControl]="toggleControl" class="mr-8">
+  </mat-slide-toggle>
+  <mat-icon>bedtime</mat-icon>
+</mat-toolbar>
+
+
+<div class="content" [ngClass]="(flagToggle)? 'shadow' : 'display-normal'">
+  <br><br><br><br><br><br>
+<section class="center">
+  <img mat-card-image src="assets/umg_logo.png" alt="Logo de UMG">
+</section>
+</div>

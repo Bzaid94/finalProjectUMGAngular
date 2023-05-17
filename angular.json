@@ -61,10 +61,12 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "finalProjectUMGAngular:build:production"
+              "browserTarget": "finalProjectUMGAngular:build:production",
+              "port" : 2023
             },
             "development": {
-              "browserTarget": "finalProjectUMGAngular:build:development"
+              "browserTarget": "finalProjectUMGAngular:build:development",
+              "port": 2022
             }
           },
           "defaultConfiguration": "development"

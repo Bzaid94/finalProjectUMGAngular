@@ -1,0 +1,55 @@
+<mat-toolbar color="primary">
+  Creación de Alumnos
+  <div class="flex-stretch"></div>
+  <mat-icon class="mr-8">brightness_5</mat-icon>
+  <mat-slide-toggle [formControl]="toggleControl" class="mr-8">
+  </mat-slide-toggle>
+  <mat-icon>bedtime</mat-icon>
+</mat-toolbar>
+
+<div class="content mat-app-background" fxLayout="row" fxLayout.xs="column" fxLayoutGap="16px" >
+  <br><br><br><br>
+  <section class="center">
+    <form class="example-form">
+      <!-- Nombre -->
+      <mat-form-field class="example-full-width">
+        <mat-label>Nombre</mat-label>
+        <input matInput placeholder="Ingrese el nombre" [(ngModel)]="catedratico.name" name="name">
+      </mat-form-field>
+      <!-- Apellido -->
+      <mat-form-field class="example-full-width">
+        <mat-label>Apellido</mat-label>
+        <input matInput placeholder="Ingrese el apellido" [(ngModel)]="catedratico.lastName" name="lastName">
+      </mat-form-field>
+      <!-- Carné -->
+      <mat-form-field class="example-full-width">
+        <mat-label>Especialidad</mat-label>
+        <input matInput placeholder="Ingrese la especialidad" [(ngModel)]="catedratico.speciality" name="speciality">
+      </mat-form-field>
+      <!-- Correo -->
+      <mat-form-field class="example-full-width">
+        <mat-label>Correo</mat-label>
+        <input matInput placeholder="Ingrese el correo" [(ngModel)]="catedratico.email" name="email">
+      </mat-form-field>
+
+    </form>
+  </section>
+
+  <section class="center">
+    <section>
+      <div class="example-label"></div>
+      <div class="example-button-row">
+        <button mat-raised-button color="primary"(click)="createCatedratico()"> Guardar </button>
+      </div>
+    </section>
+  </section>
+
+  <ng-container *ngIf="router.url !== '/'">
+    <section>
+      <div class="end">
+        <div class="example-label"></div>
+        <button mat-stroked-button color="primary" (click)="backToMenu()">Volver</button>
+      </div>
+    </section>
+  </ng-container>
+</div>
