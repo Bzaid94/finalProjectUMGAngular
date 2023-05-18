@@ -10,7 +10,6 @@ import {MatPaginator} from "@angular/material/paginator";
 import {ConfirmDeleteDialogComponent} from "../confirm-delete-dialog/confirm-delete-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 import {UpdateCatedraticoDialogComponent} from "../update-catedratico-dialog/update-catedratico-dialog.component";
-import {last} from "rxjs";
 
 @Component({
   selector: 'app-catedratico',
